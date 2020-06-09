@@ -1,0 +1,17 @@
+nav a.nav-link {
+    color: #7D7973;
+}
+
+nav a.nav-link:hover {
+    color: #C9C3B9;
+}
+
+.user-content {
+    border: 1px solid #dedede;
+    border-radius: 5px;
+}
+
+.padding {
+    padding-right: 25%;
+    padding-left: 25%;
+}
