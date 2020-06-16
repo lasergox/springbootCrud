@@ -11,7 +11,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final RestTemplate restTemplate;
-    private final String baseURL = "http://localhost:8083/api/user/";
+    private final String BASE_URL = "http://localhost:8083/api/user/";
 
     public UserServiceImpl(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplate = restTemplateBuilder.basicAuthentication("user", "password").build();
@@ -19,29 +19,29 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByEmail (String email) {
-        ResponseEntity<User> responseEntity = restTemplate.getForEntity(baseURL + email, User.class);
+        ResponseEntity<User> responseEntity = restTemplate.getForEntity(BASE_URL + email, User.class);
         return responseEntity.getBody();
     }
     @Override
     public List<User> getAllUsers () {
-       return  restTemplate.getForEntity(baseURL + "allUsers", List.class).getBody();
+       return  restTemplate.getForEntity(BASE_URL, List.class).getBody();
     }
     @Override
     public User addUser (User user) {
         HttpEntity<User> request = new HttpEntity<>(user);
-        return  restTemplate.postForObject(baseURL + "newUser", request, User.class) ;
+        return  restTemplate.postForObject(BASE_URL + "newUser", request, User.class) ;
     }
 
     @Override
     public void deleteUser (User user) {
         HttpEntity<User> request = new HttpEntity<>(user);
-        restTemplate.postForEntity(baseURL + "delete", request, User.class);
+        restTemplate.exchange(BASE_URL, HttpMethod.DELETE, request, User.class);
     }
 
     @Override
     public User updateUser (User user) {
         HttpEntity<User> request = new HttpEntity<>(user);
-        return restTemplate.postForObject(baseURL + "updateUser", request, User.class);
+        return restTemplate.postForObject(BASE_URL + "updateUser", request, User.class);
     }
 
 }
